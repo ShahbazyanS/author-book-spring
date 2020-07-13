@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul th:each="book: ${books}">
+    <li th:text="${book}"></li>
+    <a th:href="@{/deleteBook(id=${book.id})}" style="color: red">x</a>
+    <a th:href="@{/getBookById(id=${book.id})}">update</a>
+</ul>
+
+</body>
+</html>

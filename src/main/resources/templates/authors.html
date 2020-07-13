@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul th:each="author: ${all}">
+    <img th:src="@{/image(name=${author.profilePic})}" width="20" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
+    <li th:text="${author}"></li>
+
+<a th:href="@{/deleteAuthor(id=${author.id})}" style="color: red">x</a>
+    <a th:href="@{/getAuthorById(id=${author.id})}">update</a>
+</ul>
+</body>
+</html>
