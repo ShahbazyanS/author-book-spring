@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/style.css" rel="stylesheet">
 </head>
 <body>
 <h2>Add author</h2>
-<!--<h2 th:text="${msg}" th:if="${msg != null}"></h2>-->
+<h3 th:text="${msg}" th:if="${msg != null}"></h3>
 <form action="/addAuthor" method="post" enctype="multipart/form-data">
     <input type="text" name="name" placeholder="name"/><br>
     <input type="text" name="surname" placeholder="surname"/><br>
@@ -25,7 +26,7 @@
     <textarea name="description" placeholder="description"></textarea><br>
     <input name="price" type="text" placeholder="price"/><br>
     <select name="author.id">
-        <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
+        <option th:each="author: ${au}" th:value="${author.id}" th:text="${author.name}"></option>
     </select><br>
     <input type="submit" value="add">
 </form>

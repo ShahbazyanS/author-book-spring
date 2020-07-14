@@ -13,7 +13,7 @@
     <textarea name="description" th:text="${book.description}"></textarea><br>
     <input name="price" type="text"  th:value="${book.price}"/><br>
     <select name="author.id">
-        <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.name}" th:selected="${book.author.id == author.id}"></option>
+        <option th:each="author: ${a}" th:value="${author.id}" th:text="${author.name}" th:selected="${book.author.id == author.id}"></option>
     </select><br>
     <input type="submit" value="update">
 </form>

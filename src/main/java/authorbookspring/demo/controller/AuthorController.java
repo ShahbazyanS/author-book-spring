@@ -26,7 +26,10 @@ public class AuthorController {
     private final AuthorRepository authorRepository;
 
     @GetMapping("/")
-    public String homePage(){
+    public String homePage(ModelMap map,  @RequestParam(name = "msg", required = false) String msg){
+        map.addAttribute("msg", msg);
+        List<Author> all = authorRepository.findAll();
+        map.addAttribute("au", all);
         return "home";
     }
 
@@ -37,7 +40,7 @@ public class AuthorController {
         file.transferTo(image);
         author.setProfilePic(name);
         authorRepository.save(author);
-        return "redirect:/";
+        return "redirect:/?msg= Author was addid";
     }
 
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)

@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="/style.css" rel="stylesheet">
+
 </head>
 <body>
+<a href="/" style="text-decoration: none; color: black" >back</a>
+<ul class="auth" th:each="author: ${all}">
 
-<ul th:each="author: ${all}">
-    <img th:src="@{/image(name=${author.profilePic})}" width="20" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
-    <li th:text="${author}"></li>
+    <img th:src="@{/image(name=${author.profilePic})}" width="100" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
+    <li th:text="${author.name} + ' ' + ${author.surname}"></li>
 
 <a th:href="@{/deleteAuthor(id=${author.id})}" style="color: red">x</a>
     <a th:href="@{/getAuthorById(id=${author.id})}">update</a>

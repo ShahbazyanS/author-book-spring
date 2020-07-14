@@ -23,12 +23,6 @@ public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
-    @GetMapping("/authors")
-    public String allAuthors(ModelMap map){
-        List<Author> authors = authorRepository.findAll();
-        map.addAttribute("authors", authors);
-        return "home";
-    }
 
     @PostMapping("/addBook")
     public String addBook(@ModelAttribute Book book){
@@ -49,13 +43,10 @@ public class BookController {
     @GetMapping("/getBookById")
     public String getBook(@RequestParam("id") int id, ModelMap map){
         Book book = bookRepository.getOne(id);
+        List<Author> all = authorRepository.findAll();
+        map.addAttribute("a",all);
         map.addAttribute("book", book);
         return "updateBook";
     }
-    @GetMapping("/aut")
-    public String aAuthors(ModelMap map){
-        List<Author> authors = authorRepository.findAll();
-        map.addAttribute("authors", authors);
-        return "updateBook";
-    }
+
 }
