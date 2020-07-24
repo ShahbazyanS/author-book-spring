@@ -20,7 +20,10 @@ public class Author {
     private int Id;
     private String name;
     private String surname;
-    private String email;
+    private String username;
+    private String password;
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
     private String bio;

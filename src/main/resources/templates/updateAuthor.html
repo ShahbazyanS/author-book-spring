@@ -13,7 +13,7 @@
 <form th:action="@{/update(id=${author.id})}" method="post">
     <input type="text" name="name" th:value="${author.name}"/><br>
     <input type="text" name="surname"  th:value="${author.surname}"/><br>
-    <input type="text" name="email"  th:value="${author.email}"/><br>
+    <input type="text" name="email"  th:value="${author.username}"/><br>
     <input type="radio" name="gender" value="MALE"/> male
     <input type="radio" name="gender" value="FEMALE"/> female<br>
     <textarea name="bio"  th:text="${author.bio}"></textarea><br>

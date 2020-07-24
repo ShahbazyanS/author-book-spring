@@ -6,20 +6,43 @@
     <link href="/style.css" rel="stylesheet">
 </head>
 <body>
+<a href="/logout" th:if="${authorName != null}">logout</a>
+<a href="/loginPage" th:if="${authorName == null}">login</a>
+<h3 th:text="Welcome + ' ' + ${authorName}" th:if="${authorName != null}"></h3>
+
 <h2>Add author</h2>
 <h3 th:text="${msg}" th:if="${msg != null}"></h3>
 <form action="/addAuthor" method="post" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="name"/><br>
-    <input type="text" name="surname" placeholder="surname"/><br>
-    <input type="text" name="email" placeholder="email"/><br>
-    <input type="radio" name="gender" value="MALE"/> male
-    <input type="radio" name="gender" value="FEMALE"/> female<br>
-    <textarea name="bio" placeholder="bio"></textarea><br>
+    <label>
+        <input type="text" name="name" placeholder="name"/>
+    </label><br>
+    <label>
+        <input type="text" name="surname" placeholder="surname"/>
+    </label><br>
+    <label>
+        <input type="text" name="username" placeholder="username"/>
+    </label><br>
+    <label>
+        <input type="password" name="password" placeholder="password"/>
+    </label><br>
+    <select name="role">
+        <option value="USER">user</option>
+        <option value="ADMIN">admin</option>
+    </select>
+    <label>
+        <input type="radio" name="gender" value="MALE"/>
+    </label> male
+    <label>
+        <input type="radio" name="gender" value="FEMALE"/>
+    </label> female<br>
+    <label>
+        <textarea name="bio" placeholder="bio"></textarea>
+    </label><br>
     <input type="file" name="image"/><br>
-    <input type="submit" value="add">
+    <input type="submit" name="add">
 </form>
-<a href="/allAuthors">authors</a>
 
+<a href="/allAuthors">authors</a>
 <h2>Add book</h2>
 <form action="/addBook" method="post">
     <input type="text" name="title" placeholder="title"/><br>
