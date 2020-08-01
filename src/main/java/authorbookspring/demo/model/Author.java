@@ -22,10 +22,14 @@ public class Author {
     private String surname;
     private String username;
     private String password;
+    private boolean active;
+    @Transient
+    private String confirmPassword;
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
     private String bio;
     private String profilePic;
+    private String token;
 }

@@ -9,7 +9,7 @@ public class CurrentUser  extends User {
     private Author author;
 
     public CurrentUser(Author author) {
-        super(author.getUsername(),author.getPassword(), AuthorityUtils.createAuthorityList(author.getRole().name()));
+        super(author.getUsername(),author.getPassword(), author.isActive(),true, true, true,AuthorityUtils.createAuthorityList(author.getRole().name()));
         this.author = author;
     }
 
