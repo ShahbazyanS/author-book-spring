@@ -7,7 +7,9 @@
 <body>
 
 <div th:value="${author}" th:text="${author}"> </div>
-<img th:src="@{/image(name=${author.profilePic})}" width="20" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
+<img th:src="@{/image(name=${author.profilePic})}" width="20" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/><br>
+
+<header th:insert="fragments/general.html::header"></header>
 
 <h2>update author</h2>
 <form th:action="@{/update(id=${author.id})}" method="post">

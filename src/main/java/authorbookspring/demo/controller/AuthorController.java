@@ -36,15 +36,8 @@ public class AuthorController {
 
 
     @GetMapping("/")
-    public String homePage(@AuthenticationPrincipal Principal principal, ModelMap map, @RequestParam(name = "msg", required = false) String msg) {
-        String authorName = null;
-        if (principal != null) {
-            authorName = principal.getName();
-        }
+    public String homePage( ModelMap map, @RequestParam(name = "msg", required = false) String msg) {
         map.addAttribute("msg", msg);
-        List<Author> all = authorService.findAll();
-        map.addAttribute("au", all);
-        map.addAttribute("authorName", authorName);
         return "home";
     }
 
@@ -99,9 +92,7 @@ public class AuthorController {
     }
 
     @GetMapping("/allAuthors")
-    public String authors(ModelMap map) {
-        List<Author> all = authorService.findAll();
-        map.addAttribute("all", all);
+    public String authors() {
         return "authors";
     }
 

@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/style.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet"/>
+
 </head>
 <body>
-<a href="/logout" th:if="${authorName != null}">logout</a>
-<a href="/loginPage" th:if="${authorName == null}">login</a>
-<h3 th:text="Welcome + ' ' + ${authorName}" th:if="${authorName != null}"></h3>
+<header th:insert="fragments/general.html::header"></header>
 
 <h2>Add author</h2>
 <h3 th:text="${msg}" th:if="${msg != null}"></h3>
@@ -52,10 +51,11 @@
     <textarea name="description" placeholder="description"></textarea><br>
     <input name="price" type="text" placeholder="price"/><br>
     <select name="author.id">
-        <option th:each="author: ${au}" th:value="${author.id}" th:text="${author.name}"></option>
+        <option th:each="author: ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
     </select><br>
     <input type="submit" value="add">
 </form>
 <a href="/allBooks">books</a>
+
 </body>
 </html>

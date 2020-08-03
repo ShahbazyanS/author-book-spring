@@ -8,7 +8,7 @@
 </head>
 <body>
 <a href="/" style="text-decoration: none; color: black" >back</a>
-<ul class="auth" th:each="author: ${all}">
+<ul class="auth" th:each="author: ${authors}">
 
     <img th:src="@{/image(name=${author.profilePic})}" width="100" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
     <li th:text="${author.name} + ' ' + ${author.surname}"></li>
