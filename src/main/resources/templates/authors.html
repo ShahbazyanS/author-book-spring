@@ -7,14 +7,33 @@
 
 </head>
 <body>
-<a href="/" style="text-decoration: none; color: black" >back</a>
-<ul class="auth" th:each="author: ${authors}">
+<a href="/" style="text-decoration: none; color: black">back</a><br>
 
-    <img th:src="@{/image(name=${author.profilePic})}" width="100" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/>
-    <li th:text="${author.name} + ' ' + ${author.surname}"></li>
+<table id="authors" border="1">
+    <thead>
+    <tr>
+        <td>name</td>
+        <td>surname</td>
+        <td>gender</td>
+        <td>bio</td>
+        <td>profile pic</td>
+        <td>action</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author: ${authors}">
+        <td th:text="${author.name}"></td>
+        <td th:text="${author.surname}"></td>
+        <td th:text="${author.gender}"></td>
+        <td th:text="${author.bio}"></td>
+        <td> <img th:src="@{/image(name=${author.profilePic})}" width="100" th:if="${author.profilePic != null && author.profilePic.length() != 0}"/></td>
+      <td>  <a th:href="@{/deleteAuthor(id=${author.id})}" style="color: red">x</a>
+        <a th:href="@{/getAuthorById(id=${author.id})}">update</a>
+      </td>
+    </tr>
+    </tbody>
 
-<a th:href="@{/deleteAuthor(id=${author.id})}" style="color: red">x</a>
-    <a th:href="@{/getAuthorById(id=${author.id})}">update</a>
-</ul>
+</table>
+
 </body>
 </html>

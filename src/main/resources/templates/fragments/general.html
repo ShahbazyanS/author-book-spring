@@ -7,6 +7,9 @@
 <body>
 
 <div th:fragment="header">
+    <a href="?lang=hy">ARM</a>
+    <a href="?lang=ru">RU</a>
+    <a href="?lang=en">ENG</a><br>
     <a href="/logout" th:if="${authorName != null}">logout</a>
     <a href="/loginPage" th:if="${authorName == null}">login</a>
     <h3 th:text="Welcome + ' ' + ${authorName}" th:if="${authorName != null}"></h3>

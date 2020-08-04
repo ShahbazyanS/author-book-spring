@@ -7,6 +7,7 @@ import authorbookspring.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,11 +37,14 @@ public class BookController {
 
     @GetMapping("/allBooks")
     public String authors(@RequestParam(value = "page", defaultValue = "1") int page,
-                          @RequestParam(value = "size", defaultValue = "10") int size, ModelMap map) {
-        PageRequest pageRequest = PageRequest.of(page - 1, size);
+                          @RequestParam(value = "size", defaultValue = "10") int size,
+                          @RequestParam(value = "orderBy", defaultValue = "title") String orderBy, ModelMap map,
+                          @RequestParam(value = "order", defaultValue = "ASC") String order ){
+        Sort sort = order.equals("ASK") ? Sort.by(Sort.Order.asc(orderBy)):Sort.by(Sort.Order.desc(orderBy));
+        PageRequest pageRequest = PageRequest.of(page - 1, size, sort);
         Page<Book> all = bookRepository.findAll(pageRequest);
         int totalPages = all.getTotalPages();
-        if (totalPages>0){
+        if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
                     .boxed()
                     .collect(Collectors.toList());
