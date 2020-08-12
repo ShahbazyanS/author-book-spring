@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,11 +16,12 @@
     <label>
         <input type="text" name="name" placeholder="name"/>
     </label><br>
+
     <label>
         <input type="text" name="surname" placeholder="surname"/>
     </label><br>
     <label>
-        <input type="text" name="username" placeholder="username"/>
+        <input type="email" name="username" placeholder="email"/>
     </label><br>
     <label>
         <input type="password" name="password" placeholder="password"/>
@@ -43,7 +45,6 @@
     <input type="file" name="image"/><br>
     <input type="submit" name="add">
 </form>
-
 <a href="/allAuthors" th:text="#{home.menu.authors.page}">authors</a>
 <h2>Add book</h2>
 <form action="/addBook" method="post">
