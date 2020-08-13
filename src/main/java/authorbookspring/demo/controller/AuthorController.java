@@ -45,7 +45,7 @@ public class AuthorController {
     }
 
     @PostMapping("/addAuthor")
-    public String addAuthor(@Valid @ModelAttribute("a")  AuthorRequestDto authorRequest, BindingResult errors, @RequestParam("image") MultipartFile file, Model model, Locale locale) throws IOException, MessagingException {
+    public String addAuthor(@Valid @ModelAttribute("a") AuthorRequestDto authorRequest, BindingResult errors, @RequestParam("image") MultipartFile file, Model model, Locale locale) throws IOException, MessagingException {
         if (errors.hasErrors()) {
             model.addAttribute("authors", authorService.findAll());
             return "home";
@@ -74,7 +74,7 @@ public class AuthorController {
                 .build();
         authorService.save(author);
         String link = "http://localhost:8080/activate?email=" + authorRequest.getUsername() + "&token=" + author.getToken();
-        emailService.sendHtmlEmail(authorRequest.getUsername(), "Welcome", author,link,"email/authorWelcomeMail.html",locale);
+        emailService.sendHtmlEmail(authorRequest.getUsername(), "Welcome", author, link, "email/authorWelcomeMail.html", locale);
         return "redirect:/?msg= Author was addid";
     }
 
@@ -92,6 +92,46 @@ public class AuthorController {
             }
         }
         return "redirect:/?msg= Something went wrong, please try again";
+    }
+
+    @GetMapping("/author/forgotPassword")
+    public String forgotPassword(@RequestParam("email") String email) {
+        Optional<Author> byUsername = authorService.findByUsername(email);
+        if (byUsername.isPresent() && byUsername.get().isActive()) {
+            Author author = byUsername.get();
+            String token = UUID.randomUUID().toString();
+            author.setToken(token);
+            authorService.save(author);
+            String link = "http://localhost:8080/author/forgotPassword/reset?email=" + author.getUsername() + "&token=" + token;
+            emailService.send(author.getUsername(), "RESET password", "Dear user, please open this ling in order reset your password " + link);
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/author/forgotPassword/reset")
+    public String forgotPasswordReset(ModelMap modelMap, @RequestParam("token") String token, @RequestParam("email") String email) {
+        Optional<Author> byUsername = authorService.findByUsername(email);
+        if (byUsername.isPresent() && byUsername.get().getToken().equals(token)) {
+            modelMap.addAttribute("email", byUsername.get().getUsername());
+            modelMap.addAttribute("token", byUsername.get().getToken());
+            return "changePassword";
+        }
+        return "redirect:/";
+    }
+
+    @PostMapping("/author/forgotPassword/change")
+    public String changePassword(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("repeatPassword") String repeatPassword) {
+        Optional<Author> byUsername = authorService.findByUsername(email);
+        if (byUsername.isPresent()) {
+            Author author = byUsername.get();
+            if (author.getToken().equals(token) && password.equals(repeatPassword)){
+                author.setToken("");
+                author.setPassword(passwordEncoder.encode(password));
+                authorService.save(author);
+                return "redirect:/?msg=Your passwor changed";
+            }
+        }
+        return "redirect:/";
     }
 
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
