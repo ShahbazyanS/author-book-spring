@@ -5,7 +5,12 @@ import authorbookspring.demo.model.Author;
 import authorbookspring.demo.service.AuthorService;
 import authorbookspring.demo.service.EmailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.agent.builder.LambdaFactory;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +33,7 @@ import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class AuthorController {
 
 
@@ -73,6 +79,7 @@ public class AuthorController {
                 .profilePic(name)
                 .build();
         authorService.save(author);
+        log.info("author was {} email was registered", author.getUsername());
         String link = "http://localhost:8080/activate?email=" + authorRequest.getUsername() + "&token=" + author.getToken();
         emailService.sendHtmlEmail(authorRequest.getUsername(), "Welcome", author, link, "email/authorWelcomeMail.html", locale);
         return "redirect:/?msg= Author was addid";
@@ -124,7 +131,7 @@ public class AuthorController {
         Optional<Author> byUsername = authorService.findByUsername(email);
         if (byUsername.isPresent()) {
             Author author = byUsername.get();
-            if (author.getToken().equals(token) && password.equals(repeatPassword)){
+            if (author.getToken().equals(token) && password.equals(repeatPassword)) {
                 author.setToken("");
                 author.setPassword(passwordEncoder.encode(password));
                 authorService.save(author);

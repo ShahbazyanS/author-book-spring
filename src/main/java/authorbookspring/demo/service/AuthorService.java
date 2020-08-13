@@ -3,13 +3,16 @@ package authorbookspring.demo.service;
 import authorbookspring.demo.model.Author;
 import authorbookspring.demo.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthorService {
     
     private final AuthorRepository authorRepository;
@@ -19,7 +22,12 @@ public class AuthorService {
     }
     
     public Author getOne(int id){
-        return authorRepository.getOne(id);
+        try {
+            return authorRepository.getOne(id);
+        } catch (EntityNotFoundException e){
+            log.error("author with {} id does not exist ", id);
+            return null;
+        }
     }
 
     public List<Author> findAll(){
